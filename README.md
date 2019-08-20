@@ -22,7 +22,10 @@
 
    1. For secrets & credentials, you can use the API to push them up.
       ```shell
-      tfh pushvars -svar client_id=$TF_VAR_client_id -svar client_secret=$TF_VAR_client_secret -svar tenant_id=$TF_VAR_tenant_id -svar subscription_id=$TF_VAR_subscription_id
+      tfh pushvars -svar client_id=$TF_VAR_client_id \
+        -svar client_secret=$TF_VAR_client_secret \
+        -svar tenant_id=$TF_VAR_tenant_id \
+        -svar subscription_id=$TF_VAR_subscription_id
       ```
 
 1. Run `terraform plan`. Notice that the variables auto-populate and the
@@ -31,6 +34,9 @@
 1. Run `terraform apply`. If you go to the console, notice that the plan
    has stopped. It is queued for approval. When I approve on CLI, this
    triggers the approval.
+
+1. To destroy, we need to add the environment variable
+   `CONFIRM_DESTROY=1` to the workspace.
 
 ## VCS Provider
 1. `cd gcp`
