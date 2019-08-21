@@ -48,25 +48,23 @@
 
 1. Go to Terraform Cloud. You should see the workspace in the console.
 
-1. Update the workspace to use the VCS provider. Point to this
-   repository and set the working directory to `gcp`.
+1. Update the workspace to use the VCS provider.
 
-1. `terraform workspace select gcp`
+   1. Under Settings -> Version Control, choose Github and select the
+      repository.
+
+   1. Under Settings -> General, select the `gcp` working directory.
 
 1. With remote, need to add variables to workspace.
+   ```shell
+   tfh pushvars -svar project=$TF_VAR_project \
+     -svar credentials="$TF_VAR_credentials" \
+     -var region=$TF_VAR_region \
+     -var subnet_cidr=$TF_VAR_subnet_cidr \
+     -var cluster_name=$TF_VAR_cluster_name
+   ```
 
-   1. For general variables, you can add them in the UI. `cat
-      gcp.tfvars`
-
-   1. For secrets & credentials, you can use the API to push them up.
-      ```shell
-      tfh pushvars -svar project=$TF_VAR_project \
-        -svar credentials="$TF_VAR_credentials" \
-        -var region=$TF_VAR_region \
-        -var subnet_cidr=$TF_VAR_subnet_cidr \
-        -var cluster_name=$TF_VAR_cluster_name
-      ```
-1. Edit the number of cluster you want, for example.
+1. Branch and open a PR. Edit the number of clusters you want, for example.
 
 1. Push a commit.
 
