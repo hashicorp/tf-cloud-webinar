@@ -8,5 +8,5 @@ data "google_compute_zones" "available" {
 }
 
 data "google_container_engine_versions" "current" {
-  location           = var.region
+  location = var.region
 }

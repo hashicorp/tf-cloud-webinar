@@ -5,11 +5,10 @@ locals {
 }
 
 resource "google_container_cluster" "kubernetes" {
-  count      = var.num_clusters
-  name       = "${local.cluster}-cluster-${count.index}"
+  name       = "${local.cluster}-cluster"
   location   = var.region
   network    = google_compute_network.vpc.self_link
-  subnetwork = google_compute_subnetwork.subnet[count.index].self_link
+  subnetwork = google_compute_subnetwork.subnet.self_link
 
   min_master_version = data.google_container_engine_versions.current.latest_master_version
 
@@ -36,8 +35,8 @@ resource "google_container_cluster" "kubernetes" {
       "https://www.googleapis.com/auth/cloud-platform"
     ]
 
-    labels          = local.labels
-    tags            = concat(keys(local.labels), values(local.labels))
+    labels = local.labels
+    tags   = concat(keys(local.labels), values(local.labels))
   }
 
   network_policy {
