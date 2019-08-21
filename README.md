@@ -46,10 +46,20 @@
 
 1. Go into the organization's settings and add a VCS provider.
 
-1. Let's initialize a workspace that is explicitly defined in name. This
-   means that it will not automatically prefix it. `terraform init -backend-config=backend.conf`
+1. Let's initialize a workspace.
+   ``shell
+   terraform init -backend-config=backend.conf
+   terraform workspace new production
+   terraform workspace select production
+   ```
 
 1. Go to Terraform Cloud. You should see the workspace in the console.
+
+1. Set up the workspace to use the VCS provider.
+
+   1. Under Settings -> General, enter the `gcp` working directory.
+
+   1. Under Settings -> Version Control, set up the repository.
 
 1. With remote, need to add variables to workspace.
    ```shell
@@ -60,20 +70,17 @@
      -var cluster_name=$TF_VAR_cluster_name
    ```
 
-1. Set up the workspace to use the VCS provider.
+1. Create a new branch. `git checkout -b qa`
 
-   1. Under Settings -> Version Control, choose Github and select the
-      repository.
+1. Set up a new workspace. `terraform workspace new qa`
+
+1. Set up the workspace to use the VCS provider.
 
    1. Under Settings -> General, select "auto-apply" and enter the `gcp`
       working directory.
 
-   1. Under Settings -> Version Control, set auto-triggering to always trigger
-      on run.
-
-1. Branch and open a PR. `git checkout -b disable-http-lb`
-
-1. Set up a new workspace. `terraform workspace new disable-http-lb`
+   1. Under Settings -> Version Control, set up the repository and set
+      auto-triggering to always trigger on run.
 
 1. Push up the variables.
    ```shell
@@ -81,11 +88,16 @@
      -svar credentials="$TF_VAR_credentials" \
      -var region=$TF_VAR_region \
      -var subnet_cidr=$TF_VAR_subnet_cidr \
-     -var cluster_name="disable-http-lb" \
+     -var cluster_name="qa" \
      -env-var CONFIRM_DESTROY=1
    ```
 
-1. Run plan to create an environment that mimics production.
+1. Push the branch. `git push origin qa`
+
+1. Configure Settings -> Version Control to use the
+   branch `qa`.
+
+1. Queue plan to create an environment that mimics production.
 
 ### Actual Demo
 
@@ -114,14 +126,17 @@
      -env-var CONFIRM_DESTROY=1
    ```
 
-1. Since this takes a long time, let's switch to a branch we've already prepared.
-   `git checkout disable-http-lb`
+1. Since this takes a long time, let's switch to a branch we've already
+   prepared.
+   ```shell
+   git checkout qa
+   terraform workspace select qa
+   ```
 
 1. This branch is currently parity with production in configuration, so we'll
-   going to disable HTTP load balancing to test the configuration change.
-   Update `cluster.tf`.
+   going to add a new subnet (just as an example).
 
-1. Commit and push to the `disable-http-lb` branch.
+1. Commit and push to the `qa` branch.
 
 1. Go to the Terraform Cloud console and point out the commit logged and
    trigger by the change.
@@ -129,4 +144,4 @@
 1. Create a pull request from Github. Within the PR, we see some new checks
    being generated that reference Terraform Cloud.
 
-1. 
+1. When we merge, it will automatically get added to master.
