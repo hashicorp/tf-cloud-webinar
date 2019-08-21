@@ -60,18 +60,73 @@
      -var cluster_name=$TF_VAR_cluster_name
    ```
 
-### Actual Demo
-
-1. Update the workspace to use the VCS provider.
+1. Set up the workspace to use the VCS provider.
 
    1. Under Settings -> Version Control, choose Github and select the
       repository.
 
-   1. Under Settings -> General, select the `gcp` working directory.
+   1. Under Settings -> General, select "auto-apply" and enter the `gcp`
+      working directory.
 
-1. Branch and open a PR. Edit the number of clusters you want, for example.
+   1. Under Settings -> Version Control, set auto-triggering to always trigger
+      on run.
 
-1. Push a commit.
+1. Branch and open a PR. `git checkout -b disable-http-lb`
 
-1. Watch the plan run. Approve and apply!
+1. Set up a new workspace. `terraform workspace new disable-http-lb`
 
+1. Push up the variables.
+   ```shell
+   tfh pushvars -svar project=$TF_VAR_project \
+     -svar credentials="$TF_VAR_credentials" \
+     -var region=$TF_VAR_region \
+     -var subnet_cidr=$TF_VAR_subnet_cidr \
+     -var cluster_name="disable-http-lb" \
+     -env-var CONFIRM_DESTROY=1
+   ```
+
+1. Run plan to create an environment that mimics production.
+
+### Actual Demo
+
+1. Walk through setting up the workspace to use the VCS provider.
+
+   1. Under Settings -> Version Control, choose Github and select the
+      repository.
+
+   1. Under Settings -> General, select "auto-apply" and enter the `gcp`
+      working directory.
+
+   1. Under Settings -> Version Control, set auto-triggering to always trigger
+      on run.
+
+1. Branch and open a PR. `git checkout -b some-feature`
+
+1. Set up a new workspace. `terraform workspace new some-feature`
+
+1. Push up the variables. Point out `CONFIRM_DESTROY`.
+   ```shell
+   tfh pushvars -svar project=$TF_VAR_project \
+     -svar credentials="$TF_VAR_credentials" \
+     -var region=$TF_VAR_region \
+     -var subnet_cidr=$TF_VAR_subnet_cidr \
+     -var cluster_name="some-feature" \
+     -env-var CONFIRM_DESTROY=1
+   ```
+
+1. Since this takes a long time, let's switch to a branch we've already prepared.
+   `git checkout disable-http-lb`
+
+1. This branch is currently parity with production in configuration, so we'll
+   going to disable HTTP load balancing to test the configuration change.
+   Update `cluster.tf`.
+
+1. Commit and push to the `disable-http-lb` branch.
+
+1. Go to the Terraform Cloud console and point out the commit logged and
+   trigger by the change.
+
+1. Create a pull request from Github. Within the PR, we see some new checks
+   being generated that reference Terraform Cloud.
+
+1. 
