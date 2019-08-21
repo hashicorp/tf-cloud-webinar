@@ -43,9 +43,8 @@
 
 1. Go into the organization's settings and add a VCS provider.
 
-1. `terraform init -backend-config=backend.conf`
-
-1. `terraform workspace new gcp`
+1. Let's initialize a workspace that is explicitly defined in name. This
+   means that it will not automatically prefix it. `terraform init -backend-config=backend.conf`
 
 1. Go to Terraform Cloud. You should see the workspace in the console.
 
