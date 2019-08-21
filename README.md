@@ -39,6 +39,9 @@
    `CONFIRM_DESTROY=1` to the workspace.
 
 ## VCS Provider
+
+### Setup Steps
+
 1. `cd gcp`
 
 1. Go into the organization's settings and add a VCS provider.
@@ -48,13 +51,6 @@
 
 1. Go to Terraform Cloud. You should see the workspace in the console.
 
-1. Update the workspace to use the VCS provider.
-
-   1. Under Settings -> Version Control, choose Github and select the
-      repository.
-
-   1. Under Settings -> General, select the `gcp` working directory.
-
 1. With remote, need to add variables to workspace.
    ```shell
    tfh pushvars -svar project=$TF_VAR_project \
@@ -63,6 +59,15 @@
      -var subnet_cidr=$TF_VAR_subnet_cidr \
      -var cluster_name=$TF_VAR_cluster_name
    ```
+
+### Actual Demo
+
+1. Update the workspace to use the VCS provider.
+
+   1. Under Settings -> Version Control, choose Github and select the
+      repository.
+
+   1. Under Settings -> General, select the `gcp` working directory.
 
 1. Branch and open a PR. Edit the number of clusters you want, for example.
 
