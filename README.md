@@ -1,5 +1,16 @@
 # Terraform Cloud Preview - Demo
 
+## Pre-Requisites
+
+- Clone this repository
+
+- [TF Helper](https://github.com/joatmon08/tf-helper) - using fork
+  because there is a missing colon in a bash script
+
+- Terraform 0.12
+
+- Azure & GCP Credentials
+
 ## No VCS Provider, Just Remote Plan & Apply
 1. `cd azure`
 
@@ -51,8 +62,8 @@
    terraform init -backend-config=backend.conf
    terraform workspace new production
    terraform workspace select production
-   ```
 
+   ```
 1. Go to Terraform Cloud. You should see the workspace in the console.
 
 1. Set up the workspace to use the VCS provider.
