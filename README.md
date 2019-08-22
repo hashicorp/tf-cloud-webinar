@@ -129,7 +129,7 @@
      -svar credentials="$TF_VAR_credentials" \
      -var region=$TF_VAR_region \
      -var subnet_cidr=$TF_VAR_subnet_cidr \
-     -var cluster_name="some-feature" \
+     -var cluster_name=$TF_VAR_cluster_name \
      -env-var CONFIRM_DESTROY=1
    ```
 
