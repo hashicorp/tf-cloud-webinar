@@ -16,11 +16,7 @@
 
 1. `terraform init -backend-config=backend.conf`
 
-1. `terraform workspace new azure`
-
 1. Go to Terraform Cloud. You should see the workspace in the console.
-
-1. `terraform workspace select azure`
 
 1. In General Settings, notice:
    1. The workspace has been created with default remote settings.
