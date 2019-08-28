@@ -2,6 +2,8 @@
 
 ## Pre-Requisites
 
+- Set up Terraform Cloud credentials, as [noted here](https://learn.hashicorp.com/terraform/cloud/tf_cloud_gettingstarted#configure-access-for-the-terraform-cli).
+
 - Clone this repository
 
 - [TF Helper](https://github.com/joatmon08/tf-helper) - using fork
