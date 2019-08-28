@@ -12,6 +12,10 @@
 - Azure & GCP Credentials
 
 ## No VCS Provider, Just Remote Plan & Apply
+
+This is similar experience to running Terraform
+locally, via CLI.
+
 1. `cd azure`
 
 1. `terraform init -backend-config=backend.conf`
@@ -47,19 +51,27 @@
 
 ## VCS Provider
 
+This integrates a VCS provider and allows us to do pull request
+automation.
+
 ### Setup Steps
+
+1. Go to Terraform Cloud and click on the Organization's settings.
+
+1. Follow the [VCS integration guide](https://www.terraform.io/docs/cloud/vcs/index.html)
+   and set up the VCS provider of your choice.
 
 1. `cd gcp`
 
-1. Go into the organization's settings and add a VCS provider.
-
-1. Let's initialize a workspace.
-   ``shell
+1. Let's initialize a workspace. We use a backend configuration that
+   contains a workspace prefix, so we need to create and select the
+   workspaces.
+   ```shell
    terraform init -backend-config=backend.conf
    terraform workspace new production
    terraform workspace select production
-
    ```
+
 1. Go to Terraform Cloud. You should see the workspace in the console.
 
 1. Set up the workspace to use the VCS provider.
@@ -76,6 +88,8 @@
      -var subnet_cidr=$TF_VAR_subnet_cidr \
      -var cluster_name=$TF_VAR_cluster_name
    ```
+
+### Pull Request Automation
 
 1. Create a new branch. `git checkout -b qa`
 
@@ -105,40 +119,6 @@
    branch `qa`.
 
 1. Queue plan to create an environment that mimics production.
-
-### Actual Demo
-
-1. Walk through setting up the workspace to use the VCS provider.
-
-   1. Under Settings -> Version Control, choose Github and select the
-      repository.
-
-   1. Under Settings -> General, select "auto-apply" and enter the `gcp`
-      working directory.
-
-   1. Under Settings -> Version Control, set auto-triggering to always trigger
-      on run.
-
-1. Branch and open a PR. `git checkout -b some-feature`
-
-1. Set up a new workspace. `terraform workspace new some-feature`
-
-1. Push up the variables. Point out `CONFIRM_DESTROY`.
-   ```shell
-   tfh pushvars -svar project=$TF_VAR_project \
-     -svar credentials="$TF_VAR_credentials" \
-     -var region=$TF_VAR_region \
-     -var subnet_cidr=$TF_VAR_subnet_cidr \
-     -var cluster_name=$TF_VAR_cluster_name \
-     -env-var CONFIRM_DESTROY=1
-   ```
-
-1. Since this takes a long time, let's switch to a branch we've already
-   prepared.
-   ```shell
-   git checkout qa
-   terraform workspace select qa
-   ```
 
 1. This branch is currently parity with production in configuration, so we'll
    going to add a new subnet (just as an example).
