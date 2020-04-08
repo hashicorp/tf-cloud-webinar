@@ -1,5 +1,7 @@
 # Terraform Cloud Preview - Demo
 
+See [Learn Guides](https://learn.hashicorp.com/terraform) for more information.
+
 ## Pre-Requisites
 
 - Set up Terraform Cloud credentials, as [noted here](https://learn.hashicorp.com/terraform/cloud/tf_cloud_gettingstarted#configure-access-for-the-terraform-cli).
