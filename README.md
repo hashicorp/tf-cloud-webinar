@@ -30,7 +30,7 @@ locally, via CLI.
    1. The workspace has been created with default remote settings.
    1. Terraform version can be selected.
 
-1. With remote, need to add variables to workspace.
+1. With remote, need to add variables to the workspace.
 
    1. For general variables, you can add them in the UI. `cat
       azure.tfvars`
@@ -84,7 +84,7 @@ automation.
 
    1. Under Settings -> Version Control, set up the repository.
 
-1. With remote, need to add variables to workspace.
+1. With remote, need to add variables to the workspace.
    ```shell
    tfh pushvars -svar project=$TF_VAR_project \
      -svar credentials="$TF_VAR_credentials" \
