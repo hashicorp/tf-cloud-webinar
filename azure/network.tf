@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 locals {
   subnets = {
     frontend = cidrsubnet(var.cidr_block, 8, 0)
