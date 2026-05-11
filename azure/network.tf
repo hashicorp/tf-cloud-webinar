@@ -1,3 +1,5 @@
+# Copyright IBM Corp. 2019, 2026
+
 locals {
   subnets = {
     frontend = cidrsubnet(var.cidr_block, 8, 0)

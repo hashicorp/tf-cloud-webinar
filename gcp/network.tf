@@ -1,3 +1,5 @@
+# Copyright IBM Corp. 2019, 2026
+
 // Create VPC
 resource "google_compute_network" "vpc" {
   name                    = "${local.cluster}-vpc"
